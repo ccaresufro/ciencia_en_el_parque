@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ciencia en el Parque</title>
+  <style>
+    body {
+      font-family: 'Patrick Hand', cursive;
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .layout {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    .side-column {
+      flex: 1;
+      background-color: #000;
+    }
+
+    .page-wrapper {
+      width: 920px; /* 4 tarjetas * 220px + márgenes */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #000;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      height: 100px;
+      background-color: #f0c2b5;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .menu-item {
+      background-color: #e0dcd6;
+      border-radius: 10px;
+      margin: 0 10px;
+      padding: 10px;
+      width: 220px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .menu-item:hover {
+      background-color: #f8a4a0;
+    }
+
+    .menu-item.active {
+      background-color: #f8d8b6;
+    }
+
+    .menu-item.active .sub-menu {
+      display: block;
+    }
+
+    .sub-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: rgba(224, 220, 214, 0.85);
+      border-radius: 0 0 10px 10px;
+      padding: 10px 0;
+      z-index: 3;
+    }
+
+    .sub-option {
+      margin: 5px 10px;
+      padding: 10px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(224, 220, 214, 0.5), rgba(255, 255, 255, 0.5));
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .sub-option:hover {
+      background: linear-gradient(135deg, rgba(248, 232, 220, 0.8), rgba(255, 255, 255, 0.8));
+    }
+
+    .svg-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background-color: #000;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    .svg-container {
+      position: relative;
+      width: 100%;
+      max-width: 920px;
+    }
+
+    .svg-frame {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .svg-content-overlay {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 2;
+      color: #fff;
+    }
+
+    .svg-content-overlay img {
+      width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    .svg-content-overlay p {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 90%;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Patrick Hand', cursive;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="side-column"></div>
+
+    <div class="page-wrapper">
+      <div class="menu" id="menu"></div>
+
+      <div class="svg-wrapper">
+        <div class="svg-container">
+          <svg class="svg-frame" viewBox="0 0 1200 685" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <path class="background" fill="#222" fill-rule="evenodd" d="
+              M0 0 H1200 V690 H0 V0 Z
+
+              M 10 10
+              L 10 122.5
+              Q 10 10 122.5 10
+              L 1077.5 10
+              Q 1190 10 1190 122.5
+              L 1190 540
+              Q 1190 675 1077.5 675
+
+              C 990 675 860 600 723 506.25
+              C 660 440 540 440 477 506.25
+              C 400 600 270 670 168 675
+
+              Q 10 675 10 540
+              L 10 10
+              Z
+            "/>
+            <path class="frame" fill="none" stroke="#003366" stroke-width="20" d="
+              M 10 10
+              L 10 122.5
+              Q 10 10 122.5 10
+              L 1077.5 10
+              Q 1190 10 1190 122.5
+              L 1190 540
+              Q 1190 675 1077.5 675
+
+              C 990 670 860 600 723 506.25
+              C 660 440 540 440 477 506.25
+              C 400 600 270 670 168 675
+
+              Q 10 675 10 540
+              L 10 10
+              Z
+            "/>
+          </svg>
+
+          <div class="svg-content-overlay" id="svg-overlay-content">
+            <img src="https://via.placeholder.com/150" alt="RA Visual" id="overlay-img">
+            <p id="overlay-text">
+              La realidad aumentada combina el mundo físico con información digital, enriqueciendo la experiencia educativa mediante la interacción directa y visual.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-column"></div>
+  </div>
+
+  <script>
+    const menuData = [
+      {
+        title: "Introducción a la RA",
+        topics: ["¿Qué es la RA?", "¿Cómo se activa?", "Indicaciones básicas de interacción", "Recomendaciones de uso"]
+      },
+      {
+        title: "Medio Ambiente",
+        topics: ["Biodiversidad Urbana", "Ciclo del agua", "Islas de calor", "Huerto urbano"]
+      },
+      {
+        title: "Democracia y DD.HH.",
+        topics: ["Participación ciudadana", "Libertad de expresión", "Derechos fundamentales"]
+      },
+      {
+        title: "Vocaciones STEM",
+        topics: ["¿Qué es STEM?", "Ejemplos locales", "Desafíos de programación", "Diseño de prototipos"]
+      }
+    ];
+
+    const contentData = {
+      "¿Qué es la RA?": {
+        image: "https://via.placeholder.com/150/00aaff",
+        text: "La RA es una tecnología que combina el mundo real con elementos digitales en tiempo real."
+      },
+      "¿Cómo se activa?": {
+        image: "https://via.placeholder.com/150/ffaa00",
+        text: "Se activa con una app especializada que reconoce marcadores o espacios físicos."
+      },
+      "Indicaciones básicas de interacción": {
+        image: "https://via.placeholder.com/150/55ff55",
+        text: "Usa gestos, movimiento del dispositivo o voz para interactuar con objetos RA."
+      },
+      "Recomendaciones de uso": {
+        image: "https://via.placeholder.com/150/ff55ff",
+        text: "Utiliza la RA en espacios seguros y bien iluminados para una mejor experiencia."
+      },
+      "Biodiversidad Urbana": {
+        image: "https://via.placeholder.com/150/228b22",
+        text: "La biodiversidad urbana es vital para ecosistemas sanos y resilientes."
+      },
+      "Ciclo del agua": {
+        image: "https://via.placeholder.com/150/1e90ff",
+        text: "El ciclo del agua mantiene el equilibrio ecológico a través de la evaporación, condensación y precipitación."
+      },
+      "Islas de calor": {
+        image: "https://via.placeholder.com/150/ff6347",
+        text: "Las zonas urbanas retienen calor, elevando la temperatura y afectando la salud."
+      },
+      "Huerto urbano": {
+        image: "https://via.placeholder.com/150/98fb98",
+        text: "Cultivar en la ciudad fomenta la soberanía alimentaria y el cuidado del medio ambiente."
+      },
+      "Participación ciudadana": {
+        image: "https://via.placeholder.com/150/9932cc",
+        text: "Es clave para fortalecer la democracia desde lo local a lo global."
+      },
+      "Libertad de expresión": {
+        image: "https://via.placeholder.com/150/d2691e",
+        text: "Es un derecho esencial para una sociedad justa e informada."
+      },
+      "Derechos fundamentales": {
+        image: "https://via.placeholder.com/150/8b0000",
+        text: "Incluyen salud, educación, igualdad y libertad para todos los ciudadanos."
+      },
+      "¿Qué es STEM?": {
+        image: "https://via.placeholder.com/150/4682b4",
+        text: "STEM integra ciencia, tecnología, ingeniería y matemáticas para resolver problemas reales."
+      },
+      "Ejemplos locales": {
+        image: "https://via.placeholder.com/150/ff1493",
+        text: "En tu ciudad hay proyectos STEM como laboratorios móviles, ferias o clubes de robótica."
+      },
+      "Desafíos de programación": {
+        image: "https://via.placeholder.com/150/00ced1",
+        text: "Resolver puzzles y lógicas de código es clave para el pensamiento computacional."
+      },
+      "Diseño de prototipos": {
+        image: "https://via.placeholder.com/150/ff8c00",
+        text: "Aprender a prototipar fomenta la creatividad y resolución de problemas en jóvenes."
+      }
+    };
+
+    const menuContainer = document.getElementById("menu");
+
+    function toggleSubMenu(element) {
+      const items = document.querySelectorAll('.menu-item');
+      items.forEach(item => item.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    function updateContent(topic) {
+      const content = contentData[topic];
+      document.getElementById("overlay-img").src = content.image;
+      document.getElementById("overlay-img").alt = topic;
+      document.getElementById("overlay-text").textContent = content.text;
+    }
+
+    menuData.forEach(section => {
+      const item = document.createElement("div");
+      item.className = "menu-item";
+      item.innerHTML = `<h2>${section.title}</h2>`;
+
+      const subMenu = document.createElement("div");
+      subMenu.className = "sub-menu";
+
+      section.topics.forEach(topic => {
+        const sub = document.createElement("div");
+        sub.className = "sub-option";
+        sub.textContent = topic;
+        sub.onclick = (e) => {
+          e.stopPropagation();
+          updateContent(topic);
+        };
+        subMenu.appendChild(sub);
+      });
+
+      item.appendChild(subMenu);
+      item.onclick = function(e) {
+        if (e.target.classList.contains('sub-option')) return;
+        toggleSubMenu(this);
+      };
+
+      menuContainer.appendChild(item);
+    });
+  </script>
+</html>
